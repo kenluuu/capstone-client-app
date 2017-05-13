@@ -4,9 +4,15 @@
     <h1>Youtube Vue</h1>
   	<input type="text" v-model="searchTerm" @keyup.enter="getVideo"> <button  @click="getVideo">Submit</button> 
 		<hr>
-		<div>
-			<youtube :video-id="vidid"></youtube>
-		</div>
+		<div class="row">
+       <div class="col-md-8">
+        <youtube :video-id="vidid"></youtube>
+      </div>  
+      <div class="col-md-4">
+         <app-chat></app-chat>
+      </div>
+    </div>
+  
 		<hr>
 		<div>
 			<app-video-grid :results="results" @selectedVideo="vidId = $event"></app-video-grid>
@@ -18,7 +24,8 @@
 
 <script>
 import { serverBus} from '../main';
-import VideoGrid from './VideoGrid.vue'
+import VideoGrid from './VideoGrid.vue';
+import Chat from './Chat.vue'
 export default {
   data() {
   	return {
@@ -38,7 +45,9 @@ export default {
   
   },
   components: {
-  	appVideoGrid: VideoGrid
+  	appVideoGrid: VideoGrid,
+    appChat: Chat
+
   },
   methods: {
   	getVideo() {
@@ -99,18 +108,9 @@ export default {
         this.getChannelVideos();
     });
  
-  },
-  beforeRouteEnter(to, from, next) {
-     
-    var user = {}
-    serverBus.$on('userInfo',  (data) =>{
-      console.log(data);
-      user = data;
-      next((vm)=> {
-        vm.user = user;
-      });
-    }); 
-  } 
+  }
+  
+   
 }
 </script>
 

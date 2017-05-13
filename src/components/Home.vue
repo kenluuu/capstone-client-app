@@ -5,7 +5,8 @@
         <h3>Free Bootstrap Themes &amp; Templates</h3>
         <br>
         
-        <button class="btn btn-dark btn-lg" @click="createRoom"> Create Room</button>   
+<!--         <button class="btn btn-dark btn-lg" @click="createRoom"> Create Room</button>    -->
+        <router-link to="/room" tag="button" class="btn btn-dark btn-lg">Create Room</router-link>
     </div>
     
 	
@@ -24,22 +25,22 @@
         this.$router.push('/room');
         serverBus.$emit('userInfo', this.user);
       }
-    },
-    beforeRouteEnter(to, from, next) {
+    }
+    // beforeRouteEnter(to, from, next) {
      
-      var user = {}
-      serverBus.$on('userInfo',  (data) =>{
-        console.log(data);
-        user = data;
-        next((vm)=> {
-          vm.user = user;
-        });
-      });
+    //   var user = {}
+    //   serverBus.$on('userInfo',  (data) =>{
+    //     console.log(data);
+    //     user = data;
+    //     next((vm)=> {
+    //       vm.user = user;
+    //     });
+    //   });
       
-      if(Object.getOwnPropertyNames(user).length === 0){
-        next('/login');
-      }
-    } 
+    //   if(Object.getOwnPropertyNames(user).length === 0){
+    //     next('/login');
+    //   }
+    // } 
 
   }
 </script>
