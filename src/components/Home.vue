@@ -4,9 +4,7 @@
         <h1>Home {{user}} </h1>
         <h3>Free Bootstrap Themes &amp; Templates</h3>
         <br>
-        
-<!--         <button class="btn btn-dark btn-lg" @click="createRoom"> Create Room</button>    -->
-        <router-link to="/room" tag="button" class="btn btn-dark btn-lg">Create Room</router-link>
+        <router-link :to="{name: 'appRoom', query: {id: user.id}}"  class="btn btn-dark btn-lg">Create Room</router-link>
     </div>
     
 	
@@ -17,32 +15,18 @@
   export default {
     data() {
       return {
-        user: {}
+        user: undefined
       }
     },
-    methods: {
-      createRoom() {
-        this.$router.push('/room');
-        serverBus.$emit('userInfo', this.user);
+    created() {
+      if(this.$cookie.get('user')) {
+        this.user = JSON.parse(this.$cookie.get('user'));
+        this.loggedIn = false;
       }
-    }
-    // beforeRouteEnter(to, from, next) {
-     
-    //   var user = {}
-    //   serverBus.$on('userInfo',  (data) =>{
-    //     console.log(data);
-    //     user = data;
-    //     next((vm)=> {
-    //       vm.user = user;
-    //     });
-    //   });
-      
-    //   if(Object.getOwnPropertyNames(user).length === 0){
-    //     next('/login');
-    //   }
-    // } 
-
+    }  
   }
+
+  
 </script>
 
 <style type="text/css">

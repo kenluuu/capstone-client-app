@@ -1,16 +1,21 @@
 <template>
 	<div>
-		<ul>
-			<p></p>
+		
+		<ul v-for="message in messages">
+			<p>{{message}}</p>
 		</ul>	
 		
-	  <input type="" name="">   <button>send</button>
+	 
     
 	</div>
 </template>
 
 <script>
 	
+	export default {
+		props: ['messages']
+
+	}
 </script>
 
 

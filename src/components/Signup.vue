@@ -70,6 +70,7 @@
 		},
 		methods: {
 			submit(e) {
+				var vm = this;
 				e.preventDefault();
 			  $.ajax({
 				  type: "POST",
@@ -82,18 +83,15 @@
 				  data: {email: this.email, password: this.password, password_confirmation: this.password, name: this.fullName}, 
 				  success: function(response) {
 				  	
-				  	console.log(response);
-				  	serverBus.$emit('userInfo', response);
-
+				  	vm.$cookie.set('user', JSON.stringify(response), 1);
+            var user = vm.$cookie.get('user');
+            window.location.href = '/';
 				  },
 				  error: function(error) {
 				  	alert("invaild email or password");
 				  }
 				});
-			 
-			  this.$router.push('/');
 			}
-
 		}
 	}
 		

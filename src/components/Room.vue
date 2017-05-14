@@ -9,7 +9,8 @@
         <youtube :video-id="vidid"></youtube>
       </div>  
       <div class="col-md-4">
-         <app-chat></app-chat>
+         <app-chat :messages="messages"></app-chat>
+         <input type="" name="" v-model="inputMessage" @keyup.enter.prevent="createMessage">   <button @click="createMessage">send</button>
       </div>
     </div>
   
@@ -38,7 +39,9 @@ export default {
   		channelTitle: [],
       channelId:[],
       selectedChannel: '',
-      user: {}
+      user: undefined,
+      inputMessage: '',
+      messages: []
    
   		
   	};
@@ -95,7 +98,12 @@ export default {
           vidChannelId: this.channelId[i]
         });
       } 
-    }
+    },
+    createMessage() {
+        this.$socket.emit('createMessage',this.inputMessage);
+        
+        this.inputMessage = '';
+      }
   },
   created() {
 		serverBus.$on('selectedVideo', (data)=> {
@@ -107,8 +115,28 @@ export default {
         console.log(this.selectedChannel);
         this.getChannelVideos();
     });
- 
-  }
+    
+    if(this.$cookie.get('user')) {
+      this.user = JSON.parse(this.$cookie.get('user'));
+      this.loggedIn = false;
+    }
+    this.$socket.emit('join', this.user, (e) => {
+      
+
+    });
+    
+  },
+  sockets: {
+      connect: function(){
+        console.log('socket connected')
+      },
+      newMessage: function(msg) {
+        console.log(msg);
+        this.messages.push(msg);
+      }
+    }
+
+  
   
    
 }
