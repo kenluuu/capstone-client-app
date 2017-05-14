@@ -1,7 +1,7 @@
 <template>
 	
     <div class="text-center home">
-        <h1>Home {{user}} </h1>
+        <h1>Home  </h1>
         <h3>Free Bootstrap Themes &amp; Templates</h3>
         <br>
         <router-link :to="{name: 'appRoom', query: {id: user.id}}"  class="btn btn-dark btn-lg">Create Room</router-link>
@@ -19,9 +19,13 @@
       }
     },
     created() {
+      
       if(this.$cookie.get('user')) {
         this.user = JSON.parse(this.$cookie.get('user'));
         this.loggedIn = false;
+      } else {
+        window.location.href = '/login';
+        alert('you must be logged in');
       }
     }  
   }

@@ -2,11 +2,11 @@
   <div class="text-center">
   	{{user}}
     <h1>Youtube Vue</h1>
-  	<input type="text" v-model="searchTerm" @keyup.enter="getVideo"> <button  @click="getVideo">Submit</button> 
+  	<input type="text" v-model="searchTerm" @keyup.enter="getVideo"> <button  @click="getVideo">Submit</button>  <button @click="paused">pause vid</button> <button @click="playing">play</button>
 		<hr>
 		<div class="row">
        <div class="col-md-8">
-        <youtube :video-id="vidid"></youtube>
+        <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused"></youtube> 
       </div>  
       <div class="col-md-4">
          <app-chat :messages="messages"></app-chat>
@@ -100,10 +100,25 @@ export default {
       } 
     },
     createMessage() {
-        this.$socket.emit('createMessage',this.inputMessage);
-        
-        this.inputMessage = '';
-      }
+      this.$socket.emit('createMessage',this.inputMessage);
+      
+      this.inputMessage = '';
+    },
+    ready(player) {
+      console.log('ready');
+      this.player = player;
+
+    },
+    playing(player) {
+      this.player.playVideo();
+      this.$socket.emit('play', this.vidid);
+    },
+    
+    paused () {
+      console.log('works');
+      this.player.pauseVideo();
+      this.$socket.emit('pause', 'pause');
+    }
   },
   created() {
 		serverBus.$on('selectedVideo', (data)=> {
@@ -119,9 +134,11 @@ export default {
     if(this.$cookie.get('user')) {
       this.user = JSON.parse(this.$cookie.get('user'));
       this.loggedIn = false;
+    } else {
+      window.location.href = '/login';
+      alert('must be logged in');
     }
-    this.$socket.emit('join', this.user, (e) => {
-      
+    this.$socket.emit('join', {user: this.user, room: this.$route.query.id}, (e) => {
 
     });
     
@@ -133,6 +150,16 @@ export default {
       newMessage: function(msg) {
         console.log(msg);
         this.messages.push(msg);
+      },
+      playVideo: function(vidid) {
+        console.log(vidid);
+        this.vidid = vidid;
+        console.log(this.player);
+        this.player.playVideo();
+      },
+      pauseVideo: function(msg) {
+        console.log(msg);
+        this.player.pauseVideo();
       }
     }
 

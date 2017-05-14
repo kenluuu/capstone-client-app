@@ -110,24 +110,14 @@
           },
           headers: {"Accept": "application/json"},
           success: function(response) {
-            // serverBus.$emit('userInfo', response);
-            
-            // localStorage.setItem('user', JSON.stringify(response));
-                     
             vm.$cookie.set('user', JSON.stringify(response), 1);
             var user = vm.$cookie.get('user');
-
-            console.log(user);
-            console.log(JSON.parse(user));
             window.location.href = '/';
           },
           error: function(error) {
-            
             alert('incorrect email or password')
           }
         });
-        
-       
       }
     }	
   }

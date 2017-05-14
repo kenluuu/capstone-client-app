@@ -13,16 +13,24 @@ io.on('connect', (socket)=> {
 	console.log('user has connected');
 	socket.on('join', (params, callback) => {
 		console.log(params);
-		if(params.id === undefined) {
+		if(params.user.id === undefined) {
 			return callback('User must me logged in');
 		}
-		socket.join(params.id)
-		socket.emit('newMessage', `Welcome ${params.name}`);
+		socket.join(params.room)
+		socket.emit('newMessage', `Welcome ${params.user.name}`);
 		socket.on('createMessage', (msg)=> {
 			console.log(msg);
-			io.to(params.id).emit('newMessage', msg);
+			io.to(params.room).emit('newMessage', msg);
 		});
-		socket.broadcast.to(params.id).emit(`params.name has joined`);
+		socket.on('play', (vidid) => {
+			// console.log(vidid);
+			socket.broadcast.to(params.room).emit('playVideo', vidid);
+		});
+		socket.on('pause', (msg)=> {
+			console.log(msg);
+			socket.broadcast.to(params.room).emit('pauseVideo', 'pause');
+		});
+		socket.broadcast.to(params.room).emit('newMessage',`${params.user.name} has joined`);
 	});
 	
 
