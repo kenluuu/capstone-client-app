@@ -118,6 +118,10 @@ export default {
       console.log('works');
       this.player.pauseVideo();
       this.$socket.emit('pause', 'pause');
+    },
+    changeVideo(vidid, callback) {
+      this.vidid = vidid;
+      callback();
     }
   },
   created() {
@@ -152,10 +156,13 @@ export default {
         this.messages.push(msg);
       },
       playVideo: function(vidid) {
-        console.log(vidid);
-        this.vidid = vidid;
-        console.log(this.player);
-        this.player.playVideo();
+        var vm = this;
+        console.log('change');
+        this.changeVideo(vidid, function() {
+          console.log('play');
+          vm.player.playVideo();
+        });
+        
       },
       pauseVideo: function(msg) {
         console.log(msg);
