@@ -1,6 +1,7 @@
 <template>
   <div class="text-center">
   	{{user}}
+    {{usersArray}}
     <h1>Youtube Vue</h1>
   	<input type="text" v-model="searchTerm" @keyup.enter="getVideo"> <button  @click="getVideo">Submit</button>  <button @click="paused">pause vid</button> <button @click="playing">play</button>
 		<hr>
@@ -9,7 +10,7 @@
         <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused"></youtube> 
       </div>  
       <div class="col-md-4">
-         <app-chat :messages="messages"></app-chat>
+         <app-chat :messages="messages" ></app-chat>
          <input type="" name="" v-model="inputMessage" @keyup.enter.prevent="createMessage">   <button @click="createMessage">send</button>
       </div>
     </div>
@@ -24,6 +25,9 @@
 </template>
 
 <script>
+var somePromise = new Promise((resolve,reject) => {
+  resolve('it workds!');
+});
 import { serverBus} from '../main';
 import VideoGrid from './VideoGrid.vue';
 import Chat from './Chat.vue'
@@ -41,8 +45,8 @@ export default {
       selectedChannel: '',
       user: undefined,
       inputMessage: '',
-      messages: []
-   
+      messages: [],
+      usersArray: []
   		
   	};
   
@@ -119,10 +123,13 @@ export default {
       this.player.pauseVideo();
       this.$socket.emit('pause', 'pause');
     },
-    changeVideo(vidid, callback) {
-      this.vidid = vidid;
-      callback();
+    changeVideo(vidid) {
+      return new Promise((resolve,reject) => {
+        this.vidid = vidid;
+        resolve();
+      });
     }
+    
   },
   created() {
 		serverBus.$on('selectedVideo', (data)=> {
@@ -138,40 +145,49 @@ export default {
     if(this.$cookie.get('user')) {
       this.user = JSON.parse(this.$cookie.get('user'));
       this.loggedIn = false;
+      this.$socket.emit('join', {user: this.user, room: this.$route.query.id}, (e) => {
+      
+      });
     } else {
       window.location.href = '/login';
       alert('must be logged in');
     }
-    this.$socket.emit('join', {user: this.user, room: this.$route.query.id}, (e) => {
 
-    });
     
   },
   sockets: {
-      connect: function(){
-        console.log('socket connected')
-      },
-      newMessage: function(msg) {
-        console.log(msg);
-        this.messages.push(msg);
-      },
-      playVideo: function(vidid) {
-        var vm = this;
-        console.log('change');
-        this.changeVideo(vidid, function() {
-          console.log('play');
-          vm.player.playVideo();
-        });
-        
-      },
-      pauseVideo: function(msg) {
-        console.log(msg);
-        this.player.pauseVideo();
-      }
+    connect: function(){
+      console.log('socket connected')
+    },
+    newMessage: function(msg) {
+      console.log(msg);
+      this.messages.push(msg);
+    },
+    updateUsersArray: function (users) {
+      this.usersArray = users;
+    },
+    playVideo: function(vidid) {
+     
+      
+      // somePromise.then((message) => {
+      //   this.vidid = vidid;
+      // }).then(() => {
+      //   this.player.playVideo();
+      // });
+      var vm = this;
+      this.changeVideo(vidid).then(() => {
+        vm.player.playVideo();
+      });
+      
+    },
+    pauseVideo: function(msg) {
+      console.log(msg);
+      this.player.pauseVideo();
     }
-
-  
-  
+  },
+  destroyed() {
+    this.$socket.emit('disconnect');
+  }
    
 }
 </script>
