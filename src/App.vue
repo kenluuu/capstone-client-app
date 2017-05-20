@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <app-navbar></app-navbar>
+  <div id= "app-comp">
+   
     <router-view :user="user"></router-view>
 		
   </div>
@@ -32,5 +32,5 @@ export default {
 </script>
 
 <style>
-		
+	
 </style>

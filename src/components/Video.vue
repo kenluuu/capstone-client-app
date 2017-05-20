@@ -1,23 +1,26 @@
 <template>
-  <div class="col-md-2" >
-		<div class="panel panel-default">
-  		<div class="panel-body video">
-  			<div @click="getVideo">
-  				<div>
-	  				<img :src="result.vidThumbnail">
+  <div id="vids">
+  	<div class="col-md-2" >
+			<div class="panel panel-default">
+	  		<div class="panel-body video">
+	  			<div @click="getVideo">
+	  				<div>
+		  				<img :src="result.vidThumbnail">
+		  			</div>
+		  			<div>
+		  				<a href="#"><p class="title">{{result.vidTitle}}</p></a>
+		  			</div>
 	  			</div>
-	  			<div>
-	  				<a href="#"><p class="title">{{result.vidTitle}}</p></a>
-	  			</div>
-  			</div>
-	  		<div>
-	  			<a href="#" @click="getChannelVideos"><p>{{result.vidChannelTitle}}</p></a>
+		  		<div>
+		  			<a href="#" @click="getChannelVideos"><p>{{result.vidChannelTitle}}</p></a>
 
-	  		</div>	
-	  		
-	  	</div>
+		  		</div>	
+		  		
+		  	</div>
+		  </div>
 	  </div>
   </div>
+  
 </template>
 
 <script>
@@ -36,7 +39,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.video {
 		cursor: pointer;
 	}
@@ -47,6 +50,10 @@
 
 	.title{
 		font-size: 12px;
+	}
+
+	#vids {
+		
 	}
 
 

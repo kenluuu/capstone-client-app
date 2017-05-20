@@ -1,16 +1,109 @@
 <template>
-	
-    <div class="text-center home">
-        <h1>Home  </h1>
-        <h3>Free Bootstrap Themes &amp; Templates</h3>
-        <br>
-        <router-link :to="{name: 'appRoom', query: {id: user.id}}"  class="btn btn-dark btn-lg">Create Room</router-link>
+    <div id="comp-home">
+      <app-navbar></app-navbar>
+      <section id="home">
+        <div id="home-cover" class="bg-parallax">
+          <div id="home-content-box">
+            <div id="home-content-box-inner" class="text-center">
+              <div id="home-heading">
+                <h3>Let's Watch <br> Youtube Together</h3>
+              </div>
+              <div id="home-btn">
+                <a href="#" class="btn btn-lg btn-white btn-general" @click="createRoom">Create Room</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="features">
+        <div class="content-box">
+          <div class="content-title">
+            <h3>Features</h3>
+            <div class="content-title-underline"></div>
+          </div>
+          <div class="container">
+            <div class="row">
+              
+              <div class="col-md-4">
+                <div class="feature-item">
+                  <div class="feature-item-icon">
+                    <i class="fa fa-youtube-play fa-3x" ></i>
+                  </div>
+                  <div class="feature-item-title">
+                    <h3>Youtube</h3>
+                  </div>
+                  <div class="feature-item-desc">
+                    <p>Watch Youtube Videos with friends in real time.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="feature-item">
+                  <div class="feature-item-icon">
+                    <i class="fa fa-comments fa-3x" a></i>
+                  </div>
+                  <div class="feature-item-title">
+                    <h3>Chat</h3>
+                  </div>
+                  <div class="feature-item-desc">
+                    <p>Talk in a bulit in chat room.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="feature-item">
+                  <div class="feature-item-icon">
+                    <i class="fa fa-video-camera fa-3x"></i>
+                  </div>
+                  <div class="feature-item-title">
+                    <h3>Facetime</h3>
+                  </div>
+                  <div class="feature-item-desc">
+                    <p>Supports webcam and microphone.</p>
+                  </div>
+                </div>
+              </div>
+           
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="about">
+        <div id="about-bg-diagonal" class="bg-parallax"></div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <div id="about-content-box">
+                  <div id="about-content-box-outer">
+                    <div id="about-content-box-inner">
+                      <div class="content-title">
+                        <h3>Why Youtube&Chill?</h3>
+                        <div class="content-title-underline"></div>
+                      </div>
+                      <div id="about-desc">
+                        <p>Watching youtube with friends had to be done in person. Youtube&Chill makes it easy for friends to watch youtube videos together and relax no matter where they are. </p>
+                      </div>
+                      <div id="about-btn">
+                        <a href="#" @click="createRoom" class="btn btn-lg btn-general btn-red">Let's Watch</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+      <br><br><br><br><br><br><br><br>
+         
     </div>
     
 	
 </template>
 
 <script type="text/javascript">
+  import Navbar from './Navbar.vue';
   import {serverBus} from '../main';
   export default {
     data() {
@@ -20,13 +113,23 @@
     },
     created() {
       
-      if(this.$cookie.get('user')) {
+      
+    },
+    methods: {
+      createRoom() {
+        if(this.$cookie.get('user')) {
         this.user = JSON.parse(this.$cookie.get('user'));
         this.loggedIn = false;
-      } else {
-        window.location.href = '/login';
-        alert('you must be logged in');
+        window.location.href = `/room?id=${this.user.id}`;
+        } else {
+          window.location.href = '/login';
+          alert('you must be logged in');
+        }
+        
       }
+    },
+    components: {
+      appNavbar: Navbar
     }  
   }
 
@@ -34,32 +137,194 @@
 </script>
 
 <style type="text/css">
-	
-	.btn-dark {
-    border-radius: 0;
-    color: #fff;
-    background-color: rgba(0,0,0,0.4);
-}
-.btn-lg {
-    padding: 10px 16px;
-    font-size: 18px;
-    line-height: 1.3333333;
-    
+	html, body {
+    height: 100%;
+    background-color: white;
+  }
+
+  #app {
+    height: 100%;
+    background-color: white;
+  }
+  #app-comp {
+    height: 100%;
+    background-color: white;
+  }
+
+
+  h3 {
+  color: #41464b;
+  text-transform: uppercase;
 }
 
-.home {
-    
-    background: url(../assets/bg.jpg) no-repeat center center scroll;
-    display: table;
-    position: relative;
-    width: 100%;
-    height: 900px;
-    
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
+p {
+  color: #64707b;
+  font-size: 16px;
+  font-weight: 300; 
 }
+  #comp-home {
+    height: 100%;
+    background-color: white;
+  }
+
+  #home {
+    height: 100%;
+     background-color: white;
+  }
+
+  #home-cover {
+    height: 100%;
+    background-image: url("../assets/img/home-bg.jpg");
+  
+  }
+
+  #home-content-box {
+    width: 100%;
+    height: 100%;
+    display: table;
+  }
+
+  #home-content-box-inner {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  #home-heading h3 {
+    color: #fff;
+    font-size: 55px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .btn-general {
+    border-width: 2px;
+    border-radius: 0;
+    padding: 12px 26px 12px 26px;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .btn-white {
+    border-color: #fff;
+    color: #fff;
+  }
+
+  .btn-white:hover {
+    background-color: #fff;
+    color: #41464b;
+  }
+
+  .bg-parallax {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: center;
+    background-attachment:fixed;
+  }
+
+  .content-box {
+    padding: 60px 0 60px 0;
+  }
+	
+
+  .content-title h3 {
+    text-align: center;
+    font-color: #41464b;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+    text-transform: uppercase;
+  }
+
+  .content-title-underline {
+    width: 30px;
+    height: 3px;
+    background-color: #ff2e00;
+    margin: 0 auto 0 auto;
+  }
+
+  .feature-item {
+    padding: 20px 0 20px 0;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .feature-item-icon i{
+    float: left;
+    color: #ff2e00;
+    padding: 15px;
+    margin-right: 25px;
+    width: 75px;
+    height: 75px;
+    text-align: center;
+  }
+
+  .feature-item:hover .feature-item-icon i{
+    color: #fff;
+    background-color: #ff2e00;
+  }
+
+  .feature-item-title h3 {
+    color: #41464b;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0, 0, 10px, 0;
+  }
+
+  .feature-item-desc p {
+    color: #64707b;
+    font-size: 16px;
+    font-weight: 300; 
+    margin: 0;
+    padding-left: 85px;
+  }
+  #about-bg-diagonal {
+    width: 60%;
+    height: 700px;
+    float: right;
+    background-image: url("../assets/img/about-bg-3.jpg");
+    border-left: 200px solid #fff;
+    border-top: 700px solid transparent;
+  }
+
+  #about-content-box {
+    float: left;
+    height: 700px;
+  
+  }
+
+  #about-content-box-outer {
+    width: 100%;
+    height: 100%;
+    display: table;
+  }
+
+  #about-content-box-inner {
+    vertical-align: middle;
+    display: table-cell;
+  }
+  #about .content-title h3 {
+    text-align: left;
+  }
+
+  #about .content-title-underline {
+    margin: 0 0 30px 0;
+  }
+
+  .btn-red {
+    border-color: #ff2e00;
+    color: #ff2e00;
+    
+  }
+  .btn-red:hover {
+    background-color: #ff2e00;
+    color: #fff;
+  }
+
+  #about-desc {
+    margin-bottom: 30px;
+  }
 
 
 </style>

@@ -5,7 +5,7 @@ import App from './App.vue';
 import VueRouter from 'vue-router';
 import { routes } from './routes';
 import VueSocketio from 'vue-socket.io';
-import {store} from './store/store';
+
 import  VueCookie from 'vue-cookie';
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -27,6 +27,5 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
-  store,
   render: h => h(App)
 })

@@ -1,22 +1,37 @@
 <template>
-  <div class="text-center">
-  	{{user}}
-    {{usersArray}}
-    <h1>Youtube Vue</h1>
-  	<input type="text" v-model="searchTerm" @keyup.enter="getVideo"> <button  @click="getVideo">Submit</button>  <button @click="paused">pause vid</button> <button @click="playing">play</button>
-		<hr>
-		<div class="row">
-       <div class="col-md-8">
-        <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused"></youtube> 
-      </div>  
-      <div class="col-md-4">
-         <app-chat :messages="messages" ></app-chat>
-         <input type="" name="" v-model="inputMessage" @keyup.enter.prevent="createMessage">   <button @click="createMessage">send</button>
-      </div>
+  <div id="room-comp">
+	  <div id="navbar">
+      <app-navbar></app-navbar>
     </div>
+    <div id="room">
+      <div id="chat-box">
+        <div id="chat-box-users">
+           <div id="chat-users">
+             
+           </div>
+        </div>
+        
+        <div id="chat-messages">
+          <app-chat :messages="messages" ></app-chat>
+        </div>
+        <div id="chat-input-box">
+          <div id="chat-input" class="text-center">
+            <input placeholder="Send a message" v-model="inputMessage" @keyup.enter.prevent="createMessage">   
+          </div>
+        </div>
+      </div> 
+    </div>
+	<div class="row">
+    <div class="col-md-8">
+      <div id="video">
+         <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused" player-width="1010" player-height="600"></youtube> 
+      </div>
+    </div>  
+  </div>
   
 		<hr>
-		<div>
+		<input type="text" v-model="searchTerm" @keyup.enter="getVideo"> <button  @click="getVideo">Submit</button> 
+    <div>
 			<app-video-grid :results="results" @selectedVideo="vidId = $event"></app-video-grid>
 		</div>
 			
@@ -25,9 +40,12 @@
 </template>
 
 <script>
-var somePromise = new Promise((resolve,reject) => {
-  resolve('it workds!');
-});
+  var somePromise = new Promise((resolve,reject) => {
+    resolve('it workds!');
+  });
+
+
+import Navbar from './Navbar.vue'
 import { serverBus} from '../main';
 import VideoGrid from './VideoGrid.vue';
 import Chat from './Chat.vue'
@@ -46,15 +64,17 @@ export default {
       user: undefined,
       inputMessage: '',
       messages: [],
-      usersArray: []
+      usersArray: [],
+      currentTime: undefined
   		
   	};
   
   },
   components: {
   	appVideoGrid: VideoGrid,
-    appChat: Chat
-
+    appChat: Chat,
+    appNavbar: Navbar
+  
   },
   methods: {
   	getVideo() {
@@ -115,6 +135,7 @@ export default {
     },
     playing(player) {
       this.player.playVideo();
+      
       this.$socket.emit('play', this.vidid);
     },
     
@@ -192,6 +213,58 @@ export default {
 }
 </script>
 
-<style>
+<style >
+  
 
+
+  #chat-box {
+    margin-top: 80px;
+    width: 25%;
+    height: 600px;
+    float: right;
+    background-color: #fff;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #e9ebee;
+    display: block;
+    margin-right: 20px;
+    border-radius: 5px;
+  }
+  #chat-messages {
+   
+    width: 100%; 
+    height: 430px;
+    overflow-y: auto; 
+    word-wrap: break-word;
+  }
+  #chat-input-box { 
+    width: 100%;
+    height: 8%;
+    background-color: #e9ebee;
+  }
+
+  #chat-input input {
+    margin-top: 10px;
+    width: 250px;
+    border-radius: 3px;
+  }
+
+  #chat-box-users {
+    width: 100%;
+    height: 20%;
+    background-color: #e9ebee;
+    border-bottom-style: solid;
+    border-bottom-color: #e9ebee;
+    border-bottom-width: 2px;
+  }
+
+
+  #video {
+    margin-left: 30px;
+    margin-top: 80px;
+  }
+
+  #player {
+    border-style: solid;
+  }
 </style>

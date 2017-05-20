@@ -13,7 +13,7 @@
                				<input type="submit" class="btn btn-lg btn-default btn-block" value="Sign In"  @click="login">
                			</form>
                			<div id="tabs" data-tabs="tabs">
-               				<p class="text-center"><a href="#register" data-toggle="tab">Need an Account?</a></p>
+               				<p class="text-center"><a href="/signup" data-toggle="tab">Need an Account?</a></p>
                				<p class="text-center"><a href="#select" data-toggle="tab">Select Account</a></p>
               				</div>
 						</div>
