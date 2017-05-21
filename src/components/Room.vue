@@ -30,18 +30,37 @@
   </div>
   
 		<hr>
-		<input type="text" v-model="searchTerm" @keyup.enter="getVideo"> <button  @click="getVideo">Submit</button> 
-    <div>
+		  
+
+      <div class="container">
+        <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                  <div id="imaginary_container"> 
+                      <div class="input-group stylish-input-group">
+                          <input type="text" class="form-control"  v-model="searchTerm"  placeholder="Search" @keyup.enter="getVideo">
+                          <span class="input-group-addon" @click="getVideo">
+                              <button type="submit" >
+                                  <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                          </span>
+                      </div>
+                  </div>
+              </div>
+        </div>
+      </div>
+     
+      
+    <div id="vid-grid">
 			<app-video-grid :results="results" @selectedVideo="vidId = $event"></app-video-grid>
 		</div>
-			
+   <br> <br> <br> <br> <br> <br> 
   </div>
-  
+
 </template>
 
 <script>
   var somePromise = new Promise((resolve,reject) => {
-    resolve('it workds!');
+    resolve('it works!');
   });
 
 
@@ -79,7 +98,7 @@ export default {
   methods: {
   	getVideo() {
   		this.reset();
-  		this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+this.searchTerm+'&type=video&maxResults=10&key=AIzaSyDta5IM-2Dm1BZwsRRIUbGvv20NcnovaKQ')
+  		this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+this.searchTerm+'&type=video&maxResults=50&key=AIzaSyDta5IM-2Dm1BZwsRRIUbGvv20NcnovaKQ')
   				.then(response => {
   					return response.json();
   				})
@@ -90,7 +109,7 @@ export default {
   	},
     getChannelVideos() {
       this.reset();
-      this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=' +this.selectedChannel+ '&type=video&maxResults=10&order=date&key=AIzaSyDta5IM-2Dm1BZwsRRIUbGvv20NcnovaKQ')
+      this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=' +this.selectedChannel+ '&type=video&maxResults=50&order=date&key=AIzaSyDta5IM-2Dm1BZwsRRIUbGvv20NcnovaKQ')
           .then(response => {
             return response.json();
           })
@@ -113,7 +132,7 @@ export default {
         this.channelTitle.push(data[i].snippet.channelTitle);
         this.channelId.push(data[i].snippet.channelId);
         this.title.push(data[i].snippet.title);
-        this.thumbnails.push(data[i].snippet.thumbnails.default.url);
+        this.thumbnails.push(data[i].snippet.thumbnails.medium.url);
         this.results.push({
           vidId: this.videoId[i],
           vidTitle: this.title[i],
@@ -154,7 +173,12 @@ export default {
   },
   created() {
 		serverBus.$on('selectedVideo', (data)=> {
-				this.vidid = data;
+				
+      this.changeVideo(data).then(() => {
+        this.player.playVideo();
+        window.scrollTo(0, 0);
+      });
+
     });
     serverBus.$on('selectedChannelVideo', (data)=> {
         console.log(data);
@@ -264,7 +288,23 @@ export default {
     margin-top: 80px;
   }
 
-  #player {
-    border-style: solid;
+  
+
+  .stylish-input-group .input-group-addon{
+    background: white !important; 
+    
+  }
+  .stylish-input-group .form-control{
+    border-right:0; 
+    box-shadow:0 0 0; 
+    border-color:#ccc;
+  }
+  .stylish-input-group button{
+      border:0;
+      background:transparent;
+  }
+
+  #vid-grid {
+    margin-top: 30px;
   }
 </style>
