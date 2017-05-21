@@ -14,8 +14,8 @@
 		    <ul class="nav navbar-nav navbar-right">
 		      <router-link to="/signup" tag='li'><a href="#" v-if="loggedIn"><span class="glyphicon glyphicon-user" ></span> Signup</a></router-link>
 		    	<router-link to="/login" tag="li"><a href="#" v-if="loggedIn"><span class="glyphicon glyphicon-user" ></span> Login</a></router-link>
-		    	<li><a href="/" v-if="!loggedIn"><span class="glyphicon glyphicon-user"></span> {{user.name}}</a></li>
-		    	<li><a href="/login" @click="logout"v-if="!loggedIn"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+		    	<li ><a href="/" v-if="!loggedIn"><span class="glyphicon glyphicon-user"></span> {{user.name}}</a></li>
+		    	<li id="logout"><a href="/login" @click="logout"v-if="!loggedIn"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 		    	
 		    </ul>
 		  </div>
@@ -70,6 +70,7 @@
 </script>
 
 <style>
+
 .navbar, .navbar-inverse {
 	background-color: white;
 }
@@ -77,4 +78,7 @@
 .navbar-brand h3{
 	vertical-align: middle;
 }
+
+
+
 </style>

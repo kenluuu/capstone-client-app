@@ -1,26 +1,4 @@
 <template>
-  <!-- <div id="vids">
-  	<div class="col-md-3" >
-			<div class="panel panel-default">
-	  		<div class="panel-body video">
-	  			<div @click="getVideo">
-	  				<div>
-		  				<img :src="result.vidThumbnail">
-		  			</div>
-		  			<div>
-		  				<a href="#"><p class="title">{{result.vidTitle}}</p></a>
-		  			</div>
-	  			</div>
-		  		<div>
-		  			<a href="#" @click="getChannelVideos"><p>{{result.vidChannelTitle}}</p></a>
-
-		  		</div>	
-		  		
-		  	</div>
-		  </div>
-	  </div>
-  </div> -->
-
 
   <div id="vid-content" class="col-md-3">
   	<div>
@@ -53,27 +31,13 @@
 	}
 </script>
 
-<style scoped>
-	/*.video {
-		cursor: pointer;
-	}
-
-	.video:hover {
-		background-color: #ffe2e2;
-	}
-
-	.title{
-		font-size: 12px;
-	}
-
-	#vids {
-
-	}*/
+<style>
+	
 	#vid-content {
 		background-color: transparent;
 		width: 200px;
-		height: 250px;
-		/*background-color: black;*/
+		height: 200px;
+	
 	}
 	#thumbnail {
 		cursor: pointer;
@@ -82,15 +46,14 @@
 	#title p{
 		font-size:14px;
 		font-weight: 400;
-		color: #41464b;
-		/*width: 100%;
-		height: 40px;
-		background-color: red;*/
+		color: #167ac6;
+		
 		
 	}
 	#title {
+		
 		width: 195px;
- 
+ 		
   	overflow: hidden;
   	text-overflow: ellipsis;
 		height: 42px;

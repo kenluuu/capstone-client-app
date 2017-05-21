@@ -1,19 +1,24 @@
 <template>
   <div id="room-comp">
-	  <div id="navbar">
+    <div id="navbar">
       <app-navbar></app-navbar>
     </div>
+   <!--  <video id="video" width="400" height="300" autoplay></video> -->
+   <vue-webcam ref='webcam'></vue-webcam> <button @click='stop'>stop</button> <button @click="play">play</button>
     <div id="room">
+      <!-- chat box html -->
       <div id="chat-box">
-        <div id="chat-box-users">
-           <div id="chat-users">
-             
-           </div>
+        <div id="chat-box-top">
+          <div v-for="users in usersArray" id="user-box">
+             <p class="text-center " id="">{{users}}</p>
+          </div>
         </div>
+         
         
         <div id="chat-messages">
-          <app-chat :messages="messages" ></app-chat>
+          <app-chat :messages="messages"></app-chat>
         </div>
+        
         <div id="chat-input-box">
           <div id="chat-input" class="text-center">
             <input placeholder="Send a message" v-model="inputMessage" @keyup.enter.prevent="createMessage">   
@@ -21,35 +26,36 @@
         </div>
       </div> 
     </div>
-	<div class="row">
-    <div class="col-md-8">
-      <div id="video">
-         <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused" player-width="1010" player-height="600"></youtube> 
-      </div>
-    </div>  
-  </div>
+	  
+    <!-- video player -->
+    <div class="row">
+      <div class="col-md-8">
+        <div id="video">
+           <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused" player-width="1010" player-height="600"></youtube> 
+        </div>
+      </div>  
+    </div>
   
 		<hr>
 		  
-
-      <div class="container">
-        <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                  <div id="imaginary_container"> 
-                      <div class="input-group stylish-input-group">
-                          <input type="text" class="form-control"  v-model="searchTerm"  placeholder="Search" @keyup.enter="getVideo">
-                          <span class="input-group-addon" @click="getVideo">
-                              <button type="submit" >
-                                  <span class="glyphicon glyphicon-search"></span>
-                              </button>  
-                          </span>
-                      </div>
-                  </div>
-              </div>
-        </div>
+    <!-- search bar -->
+    <div class="container">
+      <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div id="imaginary_container"> 
+                    <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control"  v-model="searchTerm"  placeholder="Search" @keyup.enter="getVideo">
+                        <span class="input-group-addon" @click="getVideo">
+                            <button type="submit" >
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>  
+                        </span>
+                    </div>
+                </div>
+            </div>
       </div>
-     
-      
+    </div>
+    
     <div id="vid-grid">
 			<app-video-grid :results="results" @selectedVideo="vidId = $event"></app-video-grid>
 		</div>
@@ -62,8 +68,7 @@
   var somePromise = new Promise((resolve,reject) => {
     resolve('it works!');
   });
-
-
+import VueWebcam from 'vue-webcam';
 import Navbar from './Navbar.vue'
 import { serverBus} from '../main';
 import VideoGrid from './VideoGrid.vue';
@@ -92,7 +97,9 @@ export default {
   components: {
   	appVideoGrid: VideoGrid,
     appChat: Chat,
-    appNavbar: Navbar
+    appNavbar: Navbar,
+    VueWebcam: VueWebcam
+    
   
   },
   methods: {
@@ -140,7 +147,7 @@ export default {
           vidChannelTitle: this.channelTitle[i],
           vidChannelId: this.channelId[i]
         });
-      } 
+      }
     },
     createMessage() {
       this.$socket.emit('createMessage',this.inputMessage);
@@ -168,6 +175,12 @@ export default {
         this.vidid = vidid;
         resolve();
       });
+    },
+    play() {
+      this.$refs.webcam.play();
+    },
+    stop() {
+      this.$refs.webcam.stop()
     }
     
   },
@@ -238,7 +251,6 @@ export default {
 </script>
 
 <style >
-  
 
 
   #chat-box {
@@ -255,16 +267,20 @@ export default {
     border-radius: 5px;
   }
   #chat-messages {
-   
+    
     width: 100%; 
     height: 430px;
-    overflow-y: auto; 
+    overflow-y: scroll; 
     word-wrap: break-word;
+  
   }
   #chat-input-box { 
-    width: 100%;
-    height: 8%;
+    margin-top: 19px;
     background-color: #e9ebee;
+    width: 352px;
+    border-radius: 5px;
+    height: 49px;
+    /*position: absolute;*/
   }
 
   #chat-input input {
@@ -273,13 +289,18 @@ export default {
     border-radius: 3px;
   }
 
-  #chat-box-users {
-    width: 100%;
-    height: 20%;
+  #chat-box-top {
+    width: 352px;
+    border-radius: 1px;
+    height: 100px;
     background-color: #e9ebee;
     border-bottom-style: solid;
     border-bottom-color: #e9ebee;
     border-bottom-width: 2px;
+  
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
 
@@ -307,4 +328,32 @@ export default {
   #vid-grid {
     margin-top: 30px;
   }
+
+  #user-box {
+    width: 70px;
+    height: 100px;
+    margin-left: 5px;
+    display: inline-block;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-image: url("../assets/img/no-pic.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border-color: white;
+    border-width: 2px;
+    cursor: pointer;
+  }
+
+
+  #user-box p {
+    width: 100%;
+    height: 15px;
+    background-color: white;
+    margin-top: 60px;
+    font-size: 12px;
+    font-weight: 300;
+    border-radius: 2px;
+    color: #41464b;
+  }
+  
 </style>

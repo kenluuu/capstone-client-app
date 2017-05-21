@@ -17,6 +17,7 @@
     "vue-cookie": "^1.1.4",
     "vue-router": "^2.4.0",
     "vue-socket.io": "^2.1.1-a",
+    "vue-webcam": "^2.0.4",
     "vue-youtube-embed": "^2.1.1",
     "vuex": "^2.3.1"
   },
