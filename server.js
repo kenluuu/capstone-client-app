@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const {Users} = require('./utils/users');
+const port = process.env.PORT || 3000;
 
 var app = express();
 var server = http.Server(app);
@@ -69,7 +70,7 @@ io.on('connect', (socket)=> {
 	
 
 });
-server.listen(3000, ()=> {
+server.listen(port, ()=> {
 	console.log('server is up');
 });
 

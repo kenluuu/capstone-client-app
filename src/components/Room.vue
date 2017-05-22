@@ -4,12 +4,13 @@
       <app-navbar></app-navbar>
     </div>
    <!--  <video id="video" width="400" height="300" autoplay></video> -->
-   <vue-webcam ref='webcam'></vue-webcam> <button @click='stop'>stop</button> <button @click="play">play</button>
+    <button @click='stop'>stop</button> <button @click="play">play</button>
     <div id="room">
       <!-- chat box html -->
       <div id="chat-box">
         <div id="chat-box-top">
           <div v-for="users in usersArray" id="user-box">
+             <vue-webcam id="cam" ref='webcam' width="150" height="100"></vue-webcam>
              <p class="text-center " id="">{{users}}</p>
           </div>
         </div>
@@ -330,8 +331,8 @@ export default {
   }
 
   #user-box {
-    width: 70px;
-    height: 100px;
+    /*width: 70px;
+    height: 100px;*/
     margin-left: 5px;
     display: inline-block;
     border-radius: 5px;
@@ -355,5 +356,11 @@ export default {
     border-radius: 2px;
     color: #41464b;
   }
-  
+  #cam {
+    display: inline-block;
+  }
+
+  video {
+    display: inline-block;
+  }
 </style>
