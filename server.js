@@ -3,7 +3,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 const {Users} = require('./utils/users');
 const port = process.env.PORT || 3000;
-
+const {generateMessage} = require('./utils/messages')
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
@@ -40,7 +40,7 @@ io.on('connect', (socket)=> {
 		//creates and sends new messages
 		socket.on('createMessage', (msg)=> {
 			console.log(msg);
-			io.to(params.room).emit('newMessage', msg);
+			io.to(params.room).emit('newMessage', generateMessage(msg.from.name, msg.text));
 		});
 
 		socket.on('disconnect', ()=> {

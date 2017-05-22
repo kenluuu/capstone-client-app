@@ -3,15 +3,17 @@
     <div id="navbar">
       <app-navbar></app-navbar>
     </div>
-   <!--  <video id="video" width="400" height="300" autoplay></video> -->
-    <button @click='stop'>stop</button> <button @click="play">play</button>
+    
+       <vue-webcam ref='webcam'></vue-webcam>
+ 
+    
     <div id="room">
       <!-- chat box html -->
       <div id="chat-box">
         <div id="chat-box-top">
           <div v-for="users in usersArray" id="user-box">
-             <vue-webcam id="cam" ref='webcam' width="150" height="100"></vue-webcam>
-             <p class="text-center " id="">{{users}}</p>
+             
+             <p class="text-center">{{users}} <a href="#" @click="play"><i class="fa fa-video-camera" aria-hidden="true" ></i></a><a @click="stopvid"href="#"><i class="fa fa-times" aria-hidden="true"></i></a></p>
           </div>
         </div>
          
@@ -104,6 +106,12 @@ export default {
   
   },
   methods: {
+    stopvid () {
+      this.$refs.webcam.stop();
+    },
+    play () {
+      this.$refs.webcam.start();
+    },
   	getVideo() {
   		this.reset();
   		this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+this.searchTerm+'&type=video&maxResults=50&key=AIzaSyDta5IM-2Dm1BZwsRRIUbGvv20NcnovaKQ')
@@ -151,7 +159,7 @@ export default {
       }
     },
     createMessage() {
-      this.$socket.emit('createMessage',this.inputMessage);
+      this.$socket.emit('createMessage', {from: this.user, text: this.inputMessage});
       
       this.inputMessage = '';
     },
@@ -176,12 +184,6 @@ export default {
         this.vidid = vidid;
         resolve();
       });
-    },
-    play() {
-      this.$refs.webcam.play();
-    },
-    stop() {
-      this.$refs.webcam.stop()
     }
     
   },
@@ -272,7 +274,7 @@ export default {
     width: 100%; 
     height: 430px;
     overflow-y: scroll; 
-    word-wrap: break-word;
+    
   
   }
   #chat-input-box { 
@@ -331,8 +333,8 @@ export default {
   }
 
   #user-box {
-    /*width: 70px;
-    height: 100px;*/
+    width: 70px;
+    height: 100px;
     margin-left: 5px;
     display: inline-block;
     border-radius: 5px;
@@ -362,5 +364,7 @@ export default {
 
   video {
     display: inline-block;
+    width: 150px;
+    height: 100px;
   }
 </style>
