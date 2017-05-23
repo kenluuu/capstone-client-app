@@ -10,8 +10,17 @@ import  VueCookie from 'vue-cookie';
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(VueYouTubeEmbed);
-Vue.use(VueSocketio, 'localhost:3000');
 Vue.use(VueCookie);
+
+
+
+//use for heroku
+Vue.use(VueSocketio, 'https://frozen-chamber-14896.herokuapp.com');
+
+
+
+//use 
+// Vue.use(VueSocketio, 'localhost:3000');
 
 
 
