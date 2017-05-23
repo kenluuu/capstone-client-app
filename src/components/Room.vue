@@ -3,21 +3,19 @@
     <div id="navbar">
       <app-navbar></app-navbar>
     </div>
-     <!-- <vue-webcam class="cam" ref='webcam' ></vue-webcam> 
-     <a href="#" @click="take_photo" v-if="camOn" id="cam-icon"><i class="fa fa-camera fa-3x" aria-hidden="true"></i></a>
-      <div v-if="hasPic">
-        <img :src="pic.photo" alt="" style="width:200px;height:100px" id="snaps">
-        <p>{{pic.user}}</p>  
-      </div> -->
-      <app-facetime></app-facetime>
-      
+    <div id="facetime">
+      <app-facetime></app-facetime> 
+    </div>
+     
+ 
+    
     <div id="room">
       <!-- chat box html -->
       <div id="chat-box">
         <div id="chat-box-top">
           <div v-for="users in usersArray" id="user-box">
              
-             <p class="text-center">{{users}} <a href="#" @click="play" v-if="!camOn"><i class="fa fa-video-camera" aria-hidden="true"></i></a> <a href="#" @click="stopvid" v-if="camOn"><i class="fa fa-times" aria-hidden="true"></i></a></p>
+             <p class="text-center">{{users}} </p>
           </div>
         </div>
          
@@ -62,7 +60,7 @@
             </div>
       </div>
     </div>
-  
+    
     <div id="vid-grid">
 			<app-video-grid :results="results" @selectedVideo="vidId = $event"></app-video-grid>
 		</div>
@@ -72,19 +70,15 @@
 </template>
 
 <script>
-  
   var somePromise = new Promise((resolve,reject) => {
     resolve('it works!');
   });
 
-
-import VueWebcam from 'vue-webcam';
-import Navbar from './Navbar.vue'
+import Navbar from './Navbar.vue';
 import { serverBus} from '../main';
 import VideoGrid from './VideoGrid.vue';
-import Chat from './Chat.vue'
-import { streamBus } from '../../node_modules/vue-webcam/VueWebcam';
-import Facetime from './Facetime.vue';
+import Chat from './Chat.vue';
+import Facetime from './Facetime.vue'
 export default {
   data() {
   	return {
@@ -101,13 +95,7 @@ export default {
       inputMessage: '',
       messages: [],
       usersArray: [],
-      currentTime: undefined,
-      camOn: false,
-      streamData: '',
-      photo: undefined,
-      pic: undefined,
-      camOn: false,
-      hasPic: false
+      currentTime: undefined
   		
   	};
   
@@ -116,27 +104,12 @@ export default {
   	appVideoGrid: VideoGrid,
     appChat: Chat,
     appNavbar: Navbar,
-    VueWebcam: VueWebcam,
     appFacetime: Facetime
     
   
   },
   methods: {
-    stopvid () {
-      this.$refs.webcam.stop();
-      this.camOn = false;
-    },
-    play () {
-      this.$refs.webcam.start();
-      this.camOn = true;
-    },
-    share() {
-      this.$refs.webcam.share(this.streamData);
-    },
-    take_photo () {
-        this.photo = this.$refs.webcam.getPhoto();
-        this.$socket.emit('snap', {user: this.user.name, photo: this.photo}  );
-    },
+    
   	getVideo() {
   		this.reset();
   		this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+this.searchTerm+'&type=video&maxResults=50&key=AIzaSyDta5IM-2Dm1BZwsRRIUbGvv20NcnovaKQ')
@@ -213,11 +186,7 @@ export default {
     
   },
   created() {
-		streamBus.$on('stream', (stream)=> {
-        console.log(stream);
-        this.streamData = stream;
-    });
-    serverBus.$on('selectedVideo', (data)=> {
+		serverBus.$on('selectedVideo', (data)=> {
 				
       this.changeVideo(data).then(() => {
         this.player.playVideo();
@@ -273,10 +242,6 @@ export default {
     pauseVideo: function(msg) {
       console.log(msg);
       this.player.pauseVideo();
-    },
-    newSnap: function(snap) {
-      this.pic = snap;
-      this.hasPic = true;
     }
   },
   destroyed() {
@@ -391,24 +356,13 @@ export default {
     border-radius: 2px;
     color: #41464b;
   }
-  .cam {
-    margin-top: 50px; 
-  }
-  .streamCam {
-    display: inline-block;
+  #facetime {
+    margin-top: 50px;
   }
 
   video {
-    
+    display: inline-block;
     width: 300px;
     height: 200px;
   }
-  #snaps{
-    
-  }
-
-  #cam-icon {
-    
-  }
-  
 </style>

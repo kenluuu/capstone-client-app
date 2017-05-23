@@ -1,12 +1,13 @@
 <template>
 	<div>
-		<div class="video-container"></div>
-		<button onclick="joinRoom()">Facetime</button>
-		<button onclick="quitRoom()">Stop Time</button>
+	 <div class="video-container"></div>
+    <button onclick="joinRoom()">Facetime</button>
+    <button onclick="quitRoom()">Quit</button>	
 	</div>
+   
 </template>
 
-<script>
+<script >
 	onBistriConferenceReady = function () {
   
     var room = "myMeetingRoom";
@@ -155,5 +156,6 @@
     bc.connect();
 
 }
+
 
 </script>

@@ -25,10 +25,7 @@ export default {
    
   },
   created() {
-    // serverBus.$on('userInfo',  (data) =>{
-    //   console.log(data);
-    //   this.user = data;
-    // })
+   
   },
   methods: {
    
