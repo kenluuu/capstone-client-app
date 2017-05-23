@@ -18,6 +18,7 @@ io.on('connect', (socket)=> {
 	console.log('user has connected');
 	socket.on('join', (params, callback) => {
 		console.log(params);
+		
 		if(params.user.id === undefined) {
 			return callback('User must me logged in');
 		}
@@ -42,7 +43,10 @@ io.on('connect', (socket)=> {
 			console.log(msg);
 			io.to(params.room).emit('newMessage', generateMessage(msg.from.name, msg.text));
 		});
-
+		socket.on('snap', (data) => {
+			console.log(data);
+			socket.broadcast.to(params.room).emit('newSnap', data);
+		});
 		socket.on('disconnect', ()=> {
 			var user = users.removeUser(socket.id);
 			if (user){
