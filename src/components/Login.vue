@@ -1,5 +1,12 @@
 <template>
-	<div class="container">
+<div>
+  <div id="progress-bar"></div>
+   <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter"  >
+  <div id="progress-bar-load" v-if="load"></div>
+  </transition>
+  
+  <div class="container">
+    
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall">
@@ -86,6 +93,7 @@
         </div>
     </div>
 	</div>
+</div>
 </template>
 
 <script type="text/javascript">
@@ -94,13 +102,15 @@
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        load: false
       }
     },
     methods: {
       login(e) {
         var vm = this;
         e.preventDefault();
+        this.load = true;
         $.ajax({
           type: 'POST',
           url: 'https://sheltered-taiga-29643.herokuapp.com/api/v1/users/login.json',
@@ -110,6 +120,7 @@
           },
           headers: {"Accept": "application/json"},
           success: function(response) {
+            
             vm.$cookie.set('user', JSON.stringify(response), 1);
             var user = vm.$cookie.get('user');
             window.location.href = '/';
@@ -118,6 +129,30 @@
             alert('incorrect email or password')
           }
         });
+      },
+      beforeEnter(el) {
+      console.log('beforeEnter');
+      },
+      enter(el, done) {
+        var elem = document.getElementById("progress-bar-load");   
+        var width = 1;
+        var round = setInterval(()=> {
+          if (width >= 100) {
+            clearInterval(round);
+            done();
+          } else {
+            width++;
+            elem.style.width = width + '%';
+           
+          }
+        },10);
+
+      },
+      afterEnter(el) {
+        var width = 0;
+        var elem = document.getElementById("progress-bar-load");  
+        elem.style.width = width + '%';
+        console.log('afterEnter');
       }
     }	
   }
@@ -210,5 +245,21 @@
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+}
+#progress-bar{
+  width: 0%;
+  height: 2px;
+  background-color: red;
+  position: absolute;
+  
+  float: left;
+}
+#progress-bar-load{
+  width: 35%;
+  height: 2px;
+  background-color: red;
+  position: absolute;
+  
+  float: left;
 }
 </style>

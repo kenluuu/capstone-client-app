@@ -1,8 +1,13 @@
 <template>
   <div id= "app-comp">
+    
+    <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter" 
+                 :css="false" appear>
+      
+     <router-view></router-view>
+    </transition>
    
-    <router-view :user="user"></router-view>
-		
+    
   </div>
 </template>
 
@@ -15,7 +20,8 @@ import Home from './components/Home.vue'
 export default {
   data() {
     return {
-      user: {}
+      user: {},
+      load: false
     }
   },
   components: {
@@ -28,12 +34,40 @@ export default {
    
   },
   methods: {
-   
+    beforeEnter(el) {
+      console.log('beforeEnter');
+    },
+    enter(el, done) {
+      var elem = document.getElementById("progress-bar");   
+      var width = 1;
+      var round = setInterval(()=> {
+        if (width >= 100) {
+          clearInterval(round);
+          done();
+        } else {
+          width++;
+          elem.style.width = width + '%';
+         
+        }
+      },10);
+
+    },
+    afterEnter(el) {
+      var width = 0;
+      var elem = document.getElementById("progress-bar");  
+      elem.style.width = width + '%';
+      console.log('afterEnter');
+    }
   }
   
 }
 </script>
 
 <style>
-	
+#progress-bar{
+  width: 0%;
+  height: 2px;
+  background-color: red;
+  position: absolute;
+}
 </style>

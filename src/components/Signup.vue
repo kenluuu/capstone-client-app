@@ -1,10 +1,16 @@
 <template>
+	<div>
+  <div id="progress-bar"></div>
+   <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter"  >
+  	<div id="progress-bar-load" v-if="load"></div>
+  </transition>
 	<div class="container">
+        <div id="progress-bar"></div>
         <div class="row centered-form">
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
         	<div class="panel panel-default">
         		<div class="panel-heading">
-			    		<h3 class="panel-title">Please sign up for Bootsnipp <small>It's free!</small></h3>
+			    		<h3 class="panel-title">Sign up for Youtube & Chill <small>It's free!</small></h3>
 			 			</div>
 			 			<div class="panel-body">
 			    		<form role="form">
@@ -50,6 +56,7 @@
     	</div>
     {{fullName}}
     </div>	
+  </div>
 </template>
 
 <script type="text/javascript">
@@ -61,6 +68,8 @@
 				lastName: '',
 				email: '',
 				password: '',
+				load: false
+			
 			};
 		},
 		computed: {
@@ -72,6 +81,7 @@
 			submit(e) {
 				var vm = this;
 				e.preventDefault();
+			 	this.load = false;
 			  $.ajax({
 				  type: "POST",
 				  url: 'https://sheltered-taiga-29643.herokuapp.com/api/v1/users.json',
@@ -91,7 +101,32 @@
 				  	alert("invaild email or password");
 				  }
 				});
-			}
+			},
+			beforeEnter(el) {
+      console.log('beforeEnter');
+	    },
+	    enter(el, done) {
+	      var elem = document.getElementById("progress-bar-load");   
+	      var width = 1;
+	      var round = setInterval(()=> {
+	        if (width >= 100) {
+	          clearInterval(round);
+	          done();
+	        } else {
+	          width++;
+	          elem.style.width = width + '%';
+	         
+	        }
+	      },10);
+
+	    },
+	    afterEnter(el) {
+	      var width = 0;
+	      var elem = document.getElementById("progress-bar-load");  
+	      elem.style.width = width + '%';
+	      console.log('afterEnter');
+	    }
+  	
 		}
 	}
 		
@@ -108,4 +143,19 @@
 		background: rgba(255, 255, 255, 0.8);
 		box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
 	}
+	#progress-bar{
+  width: 0%;
+  height: 2px;
+  background-color: red;
+  position: absolute;
+}
+#progress-bar-load{
+  width: 35%;
+  height: 2px;
+  background-color: red;
+  position: absolute;
+  
+  float: left;
+}
+
 </style>

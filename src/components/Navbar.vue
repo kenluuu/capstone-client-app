@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<nav class="navbar navbar-default navbar-fixed-top">
+		  <div id="progress-bar"></div>
 		  <div class="container-fluid">
 		    <div class="navbar-header">
 		      <a class="navbar-brand" href="/">Youtube & Chill</a>
@@ -9,7 +10,7 @@
 		    <ul class="nav navbar-nav">
 		     
 		      
-		      
+		     
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
 		      <router-link to="/signup" tag='li'><a href="#" v-if="loggedIn"><span class="glyphicon glyphicon-user" ></span> Signup</a></router-link>

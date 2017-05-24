@@ -3,9 +3,9 @@
     <div id="navbar">
       <app-navbar></app-navbar>
     </div>
-    <div id="facetime">
+   <!--  <div id="facetime" v-if="facetimeOn">
       <app-facetime></app-facetime> 
-    </div>
+    </div> -->
      
  
     
@@ -64,7 +64,7 @@
     <div id="vid-grid">
 			<app-video-grid :results="results" @selectedVideo="vidId = $event"></app-video-grid>
 		</div>
-   <br> <br> <br> <br> <br> <br> 
+   <br> <br> <br> <br> <br> <br><br><br><br><br><br><br>
   </div>
 
 </template>
@@ -95,7 +95,8 @@ export default {
       inputMessage: '',
       messages: [],
       usersArray: [],
-      currentTime: undefined
+      currentTime: undefined,
+      facetimeOn: false
   		
   	};
   

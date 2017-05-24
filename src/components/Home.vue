@@ -2,18 +2,24 @@
     <div id="comp-home">
       <app-navbar></app-navbar>
       <section id="home">
+        <transition appear   enter-active-class="animated fadeIn"> 
         <div id="home-cover" class="bg-parallax">
           <div id="home-content-box">
             <div id="home-content-box-inner" class="text-center">
-              <div id="home-heading">
-                <h3>Let's Watch <br> Youtube Together</h3>
-              </div>
-              <div id="home-btn">
-                <a href="#" class="btn btn-lg btn-white btn-general" @click="createRoom">Create Room</a>
-              </div>
+              <transition appear   enter-active-class="animated zoomIn"> 
+                <div id="home-heading">
+                  <h3>Let's Watch <br> Youtube Together</h3>
+                </div>
+              </transition>
+              <transition appear enter-active-class="animated zoomIn">
+                <div id="home-btn">
+                  <a href="#" class="btn btn-lg btn-white btn-general" @click="createRoom">Create Room</a>
+                </div>
+              </transition>
             </div>
           </div>
         </div>
+        </transition>
       </section>
       <section id="features">
         <div class="content-box">
@@ -194,6 +200,7 @@ p {
     font-size: 55px;
     font-weight: 700;
     text-transform: uppercase;
+
   }
 
   .btn-general {
@@ -325,6 +332,21 @@ p {
   #about-desc {
     margin-bottom: 30px;
   }
+  #home-cover, #home-heading, #home-btn {
+  animation-duration: .5s;
+}
 
+
+#home-cover {
+  animation-delay: .1s;
+}
+
+#home-heading {
+  animation-delay: .5s;
+}
+
+#home-btn {
+  animation-delay: 1s;
+}
 
 </style>

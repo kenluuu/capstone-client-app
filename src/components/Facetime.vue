@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<div>
 	 <div class="video-container"></div>
     <button onclick="joinRoom()">Facetime</button>
@@ -54,8 +54,8 @@
      */
     bc.init({
         // don't forget to replace the following keys by your own
-        appId: "a8ebd0ae",
-        appKey: "7451ab8bf7c9dfd0b2cc00fda7bbed3a",
+        appId: "d157a0b6",
+        appKey: "73c0ba318262e6f792aa9bc22c0bb38e",
         debug: true
     });
 
@@ -158,4 +158,4 @@
 }
 
 
-</script>
+</script> -->

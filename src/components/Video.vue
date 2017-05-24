@@ -1,17 +1,17 @@
 <template>
 
-  <div id="vid-content" class="col-md-3">
-  	<div>
-  		<img id="thumbnail" :src="result.vidThumbnail" @click="getVideo" width="196" height="110">
-  	</div>
-  	<div id="title" @click="getVideo">
-  		<p class="">{{result.vidTitle}}</p>
-  	</div>
-  	<div @click="getChannelVideos" id="channel">
-  		<p>{{result.vidChannelTitle}}</p>
-  	</div>
-  </div>
-  
+	  <div id="vid-content" class="col-md-3">
+	  	<div>
+	  		<img id="thumbnail" :src="result.vidThumbnail" @click="getVideo" width="196" height="110">
+	  	</div>
+	  	<div id="title" @click="getVideo">
+	  		<p class="">{{result.vidTitle}}</p>
+	  	</div>
+	  	<div @click="getChannelVideos" id="channel">
+	  		<p>{{result.vidChannelTitle}}</p>
+	  	</div>
+	  </div>
+	
 </template>
 
 <script>
@@ -37,7 +37,8 @@
 		background-color: transparent;
 		width: 200px;
 		height: 200px;
-	
+		animation-delay: .1s;
+		animation-duration: 1s;
 	}
 	#thumbnail {
 		cursor: pointer;
