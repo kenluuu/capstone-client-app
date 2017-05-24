@@ -5,13 +5,16 @@ import App from './App.vue';
 import VueRouter from 'vue-router';
 import { routes } from './routes';
 import VueSocketio from 'vue-socket.io';
+import VueChatScroll from 'vue-chat-scroll';
+
 
 import  VueCookie from 'vue-cookie';
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(VueYouTubeEmbed);
 Vue.use(VueCookie);
-
+Vue.use(VueChatScroll)
+;
 
 
 //use for heroku

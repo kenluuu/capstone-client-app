@@ -1,7 +1,7 @@
 <template>
-	<div id="messages">
+	<div id="messages" >
 		
-		<div id="messages" v-for="message in messages">
+		<div id="messages" v-for="message in messages" >
 			<p id="from">{{message.from}} </p>
 			<p id="text">{{message.text}}</p>
 			
@@ -10,6 +10,7 @@
 			
 			
 		</div>	
+		
 		
 	 
     

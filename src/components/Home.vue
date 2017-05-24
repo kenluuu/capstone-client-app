@@ -123,10 +123,24 @@
     },
     methods: {
       createRoom() {
+        var vm = this
         if(this.$cookie.get('user')) {
+        
         this.user = JSON.parse(this.$cookie.get('user'));
         this.loggedIn = false;
-        window.location.href = `/room?id=${this.user.id}`;
+        // var roomName = prompt('Please Enter a Name for your Room!');
+        alertify.prompt( "Please Enter a Name for your Room!", function (e, str) {
+          if (e) {
+              // after clicking OK
+              // str is the value from the textbox
+
+              window.location.href = `/room?id=${str}`;
+          } else {
+              // after clicking Cancel
+          }
+        });
+
+        
         } else {
           window.location.href = '/login';
           alert('you must be logged in');

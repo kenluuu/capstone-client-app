@@ -42,7 +42,7 @@
     </div>
   
 		<hr>
-		  
+		
     <!-- search bar -->
     <div class="container">
       <div class="row">
@@ -96,7 +96,8 @@ export default {
       messages: [],
       usersArray: [],
       currentTime: undefined,
-      facetimeOn: false
+      facetimeOn: false,
+      
   		
   	};
   

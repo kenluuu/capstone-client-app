@@ -11,7 +11,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    
+    // "alertifyjs": "^1.10.0",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-latest": "^6.0.0",
@@ -31,7 +31,6 @@
     "vue-template-compiler": "^2.2.1",
     "vue-webcam": "^2.0.4",
     "vue-youtube-embed": "^2.1.1",
-    
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
   },

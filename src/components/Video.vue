@@ -35,7 +35,7 @@
 	
 	#vid-content {
 		background-color: transparent;
-		width: 200px;
+		width: 220px;
 		height: 200px;
 		animation-delay: .1s;
 		animation-duration: 1s;
