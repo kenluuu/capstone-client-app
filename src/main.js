@@ -17,7 +17,7 @@ Vue.use(VueCookie);
 
 
 //use for heroku
-Vue.use(VueSocketio, 'https://frozen-chamber-14896.herokuapp.com');
+Vue.use(VueSocketio, 'https://youtube-n-chill.herokuapp.com');
 
 
 
