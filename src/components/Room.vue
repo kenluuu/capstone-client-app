@@ -15,7 +15,7 @@
         <div id="chat-box-top">
           <div v-for="users in usersArray" id="user-box">
              
-             <p class="text-center">{{users}} <a href="#" @click="facetimeOn = !facetimeOn"><i class="fa fa-video-camera" aria-hidden="true"></i></a></p>
+             <p class="text-center">{{users}} <a href="#" @click="webcam"><i class="fa fa-video-camera" aria-hidden="true"></i></a></p>
           </div>
         </div>
          
@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-md-8">
         <div id="video">
-           <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused" player-width="1010" player-height="600"></youtube> 
+           <youtube :video-id="vidid" @ready="ready" @playing="playing" @paused="paused" player-width="1010" :player-height="playerHeight"></youtube> 
         </div>
       </div>  
     </div>
@@ -97,6 +97,7 @@ export default {
       usersArray: [],
       currentTime: undefined,
       facetimeOn: false,
+      playerHeight: 600
       
   		
   	};
@@ -184,6 +185,15 @@ export default {
         this.vidid = vidid;
         resolve();
       });
+    },
+    webcam() {
+      if(this.playerHeight === 600) {
+        this.playerHeight = 450;
+      } else if (this.playerHeight === 450) {
+        this.playerHeight = 600;
+      }
+      
+      this.facetimeOn = !this.facetimeOn;
     }
     
   },

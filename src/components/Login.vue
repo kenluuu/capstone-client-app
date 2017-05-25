@@ -15,8 +15,8 @@
                		    <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                     alt="">
                			<form class="form-signin" action="" method="">
-               				<input type="text" class="form-control" placeholder="Email" required autofocus v-model='email'> {{email}}
-               				<input type="password" class="form-control" placeholder="Password" required v-model="password"> {{password}}
+               				<input type="text" class="form-control" placeholder="Email" required autofocus v-model='email'> 
+               				<input type="password" class="form-control" placeholder="Password" required v-model="password"> 
                				<input type="submit" class="btn btn-lg btn-default btn-block" value="Sign In"  @click.once="login">
                			</form>
                			<div id="tabs" data-tabs="tabs">

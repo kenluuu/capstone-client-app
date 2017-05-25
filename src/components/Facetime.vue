@@ -54,8 +54,8 @@
      */
     bc.init({
         // don't forget to replace the following keys by your own
-        appId: "1daa9b19",
-        appKey: "08f5f1f3b998802448f1be6073006542",
+        appId: "bb4f7163",
+        appKey: "5e99f418de71aa86fb04c7f1fd49504a",
         debug: true
     });
 
