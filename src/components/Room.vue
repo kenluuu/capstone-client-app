@@ -3,9 +3,9 @@
     <div id="navbar">
       <app-navbar></app-navbar>
     </div>
-   <!--  <div id="facetime" v-if="facetimeOn">
+    <div id="facetime" v-if="facetimeOn">
       <app-facetime></app-facetime> 
-    </div> -->
+    </div>
      
  
     
@@ -15,7 +15,7 @@
         <div id="chat-box-top">
           <div v-for="users in usersArray" id="user-box">
              
-             <p class="text-center">{{users}} </p>
+             <p class="text-center">{{users}} <a href="#" @click="facetimeOn = !facetimeOn"><i class="fa fa-video-camera" aria-hidden="true"></i></a></p>
           </div>
         </div>
          

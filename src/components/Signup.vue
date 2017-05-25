@@ -47,7 +47,7 @@
 			    				</div>
 			    			</div>
 			    			
-			    			<input type="submit" value="Register" class="btn btn-info btn-block" @click="submit">
+			    			<input type="submit" value="Register" class="btn btn-info btn-block" @click.once="submit">
 			    		
 			    		</form>
 			    	</div>

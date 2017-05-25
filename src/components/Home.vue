@@ -133,7 +133,10 @@
           if (e) {
               // after clicking OK
               // str is the value from the textbox
-
+              if (!str || 0 === str.length) {
+                
+                return alertify.alert('Invalid Name');
+              }
               window.location.href = `/room?id=${str}`;
           } else {
               // after clicking Cancel

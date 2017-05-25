@@ -14,27 +14,9 @@
 		    </ul>
 		    	
 	    		<h3 class="navbar-text" id="room-name">{{roomName}} </h3>	
-	    		<p class="navbar-text" id="user-name"> made by {{user.name}} </p>
+	    		<p v-if="roomName"class="navbar-text" id="user-name"> made by {{user.name}}  <button  id="invite-btn" class="btn btn-primary" @click="invite">Invite Friends</button></p>
 	    		
-	    		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-	    			<div id="myModal" class="modal fade" role="dialog">
-						  <div class="modal-dialog">
-
-						    <!-- Modal content-->
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						        <h4 class="modal-title">Modal Header</h4>
-						      </div>
-						      <div class="modal-body">
-						        <p>Some text in the modal.</p>
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
+	    		
 	    	
 		   
 		    <ul class="nav navbar-nav navbar-right">
@@ -79,6 +61,10 @@
 			goHome() {
 				
 				window.location.href = '/';
+			},
+			invite() {
+				alertify.alert('Share This Link to invite friends: http://localhost:8080/room?id=' +this.roomName );
+
 			}
 		},
 		created() {
@@ -98,7 +84,7 @@
 </script>
 
 <style>
-
+#webcam
 .navbar, .navbar-inverse {
 	background-color: white;
 }
@@ -108,14 +94,19 @@
 }
 
 #room-name {
-	margin-left: 400px;
+	margin-left: 500px;
 	margin-right: 0px;
 }
 
 #user-name{  
-	margin-top: 20px;
+	margin-top: 15px;
 	margin-right: 40px;
-	
+	margin-bottom: 10px;
+}
+
+#invite-btn {
+	padding: 5px;
+	margin-left: 100px;
 }
 
 </style>

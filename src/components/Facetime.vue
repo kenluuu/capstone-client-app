@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
 	<div>
 	 <div class="video-container"></div>
     <button onclick="joinRoom()">Facetime</button>
@@ -8,7 +8,7 @@
 </template>
 
 <script >
-	onBistriConferenceReady = function () {
+	var on  = function () {
   
     var room = "myMeetingRoom";
 
@@ -54,8 +54,8 @@
      */
     bc.init({
         // don't forget to replace the following keys by your own
-        appId: "d157a0b6",
-        appKey: "73c0ba318262e6f792aa9bc22c0bb38e",
+        appId: "1daa9b19",
+        appKey: "08f5f1f3b998802448f1be6073006542",
         debug: true
     });
 
@@ -157,5 +157,19 @@
 
 }
 
+    var off = function() {
+       
+        
+    }
+    export default {
+        mounted() {
+            on();
+        },
+        destroyed () {
+            
+            off();
+        }
+    }
 
-</script> -->
+
+</script>
