@@ -63,7 +63,7 @@
 				window.location.href = '/';
 			},
 			invite() {
-				alertify.alert('Share This Link to invite friends: http://localhost:8080/room?id=' +this.roomName );
+				alertify.alert('Share This Link to invite friends: https://youtube-n-chill.herokuapp.com/room?id=' +this.roomName );
 
 			}
 		},
